@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 import {
     Title,
@@ -118,9 +119,9 @@ export default function Repositorio() {
                             </DeleteButton>
                             {repo.name}
                         </span>
-                        <a>
+                        <Link to={`/repositorio/${encodeURIComponent(repo.name)}`}>
                             <FaBars size={20} />
-                        </a>
+                        </Link>
                     </li>
                 ))}
             </List>
