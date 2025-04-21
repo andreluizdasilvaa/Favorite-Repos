@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import { FaGithub, FaPlus, FaSpinner } from 'react-icons/fa';
+import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 
 import {
     Title,
     Container,
     Form,
     SubmitButton,
+    List,
+    DeleteButton
 } from './styles';
 import api from '../../services/api';
 
@@ -24,7 +26,6 @@ export default function Repositorio() {
                     return;
                 }
 
-                await new Promise(resolve => setTimeout(resolve, 3000));
                 const response = await api.get(`repos/${newRepo}`);
 
                 const data = {
@@ -43,6 +44,12 @@ export default function Repositorio() {
         
         submit();
     }, [newRepo, repositorios])
+
+    const handleDelete = useCallback((repo) => {
+        // esse func vai receber o nome do repo, e em baixo vai receber todos os repos com o nome diferente do que foi passado nessa func
+        const find = repositorios.filter(r => r.name !== repo)
+        setRepositorios(find);
+    }, [repositorios]);
 
     function handleInputChange(e) {
         setNewRepo(e.target.value);
@@ -74,6 +81,23 @@ export default function Repositorio() {
                     
                 </SubmitButton>
             </Form>
+
+            <List>
+                {repositorios.map((repo, index) => (
+                    <li key={index}>
+                        
+                        <span>
+                            <DeleteButton onClick={() => {handleDelete(repo.name)}}>
+                                <FaTrash size={20} />
+                            </DeleteButton>
+                            {repo.name}
+                        </span>
+                        <a>
+                            <FaBars size={20} />
+                        </a>
+                    </li>
+                ))}
+            </List>
         </Container>
     );
 }

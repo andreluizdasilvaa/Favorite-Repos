@@ -76,3 +76,34 @@ export const SubmitButton = styled.button.attrs(props => ({
     `
     }
 `;
+
+export const List = styled.ul`
+    list-style: none;
+    margin-top: 20px;
+
+    li {
+        padding: 15px 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        
+        // isso ignora o primeiro li que for criado, e só depois aplica esse estilo
+        & + li {
+            border-top: 1px solid #ddd;
+        }
+
+        a{
+            color: ${PrimaryColor};
+        }
+    }
+`;
+
+export const DeleteButton = styled.button.attrs({
+    type: 'button'
+})`
+    margin-right: 12px;
+    border: 0;
+    background: transparent;
+    color: ${PrimaryColor};
+`;
