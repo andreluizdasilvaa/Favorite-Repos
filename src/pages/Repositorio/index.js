@@ -6,7 +6,8 @@ import styles, {
     Container,
     Owner,
     Loading,
-    BackButton
+    BackButton,
+    IssuesList
 } from './styles';
 // 
 export default function Repositorio({ match }) {
@@ -30,7 +31,7 @@ export default function Repositorio({ match }) {
                 )
             ]);
 
-            console.log(repositorioData.data)
+            console.log(issuesData.data)
             setIssues(issuesData.data);
             setRepositorio(repositorioData.data);
             setLoading(false);
@@ -61,6 +62,28 @@ export default function Repositorio({ match }) {
                 <h1>{repositorio.name}</h1>
                 <p>{repositorio.description}</p>
             </Owner>
+
+            <IssuesList>
+                {issues.map(issue => (
+                    <li key={String(issue.id)}>
+                        <img src={issue.user.avatar_url} alt={issue.user.login}/>
+                        
+                        <div>
+                            <strong>
+                                <a href={issue.html_url} target='_blank'>
+                                    {issue.title}
+                                </a>
+
+                                {issue.labels.map(label => (
+                                    <span key={String(label.id)}>{label.name}</span>
+                                ))}
+
+                                <p>{issue.user.login}</p>
+                            </strong>
+                        </div>
+                    </li>
+                ))}
+            </IssuesList>
         </Container>
     );
 }
