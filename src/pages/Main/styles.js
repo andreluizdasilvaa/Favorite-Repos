@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { PrimaryColor } from '../../styles/colors'
 
 export const Title = styled.h1`
@@ -39,7 +39,21 @@ export const Form = styled.form`
     }
 `;
 
-export const SubmitButton = styled.button`
+// Animação spinner no button
+const animateSpinner = keyframes`
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(360deg);
+    }
+`;
+
+export const SubmitButton = styled.button.attrs(props => ({
+    type: 'submit',
+    disabled: props.loading,
+}))`
     background-color: ${PrimaryColor};
     border: 0;
     border-radius: 4px;
@@ -48,4 +62,17 @@ export const SubmitButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    ${props => props.loading &&
+    css`
+        svg {
+            animation: ${animateSpinner} 2s linear infinite;
+        }
+    `
+    }
 `;
