@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { FaGithub, FaPlus, FaSpinner, FaBars, FaTrash } from 'react-icons/fa';
 
 import {
@@ -15,16 +15,41 @@ export default function Repositorio() {
     const [newRepo, setNewRepo] = useState('');
     const [repositorios, setRepositorios] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [alert, setAlert] = useState(null);
+
+    // Buscar repos
+    useEffect(() => {
+        const repoStorage = localStorage.getItem('repos');
+
+        if(repoStorage) {
+            setRepositorios(JSON.parse(repoStorage));
+        }
+    }, [])
+
+    // salvando alterações
+    useEffect(() => {
+        localStorage.setItem('repos', JSON.stringify(repositorios));
+    }, [repositorios])
 
     const handleSubmit = useCallback((e) => {
         async function submit() {
             setLoading(true)
+            setAlert(null);
             try {
                 e.preventDefault();
 
                 if(!newRepo) {
-                    return;
+                    throw new Error('Você precisa indicar um repositório');
                 }
+
+                // Verifica se o repositório enviado pelo usuário já existe no array.
+                // Caso já exista, a função retorna sem adicionar o repositório novamente.
+                const hasRepo = repositorios.find(repo => repo.name === newRepo);
+
+                if(hasRepo) {
+                    throw new Error('Repositório duplicado')
+                }
+
 
                 const response = await api.get(`repos/${newRepo}`);
 
@@ -36,6 +61,7 @@ export default function Repositorio() {
                 setNewRepo('');
                 console.log(repositorios);
             } catch (error) {
+                setAlert(true)
                 console.log(error);
             } finally {
                 setLoading(false)
@@ -62,7 +88,7 @@ export default function Repositorio() {
                 Meus repositorios
             </h1>
 
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} error={alert}>
                 <input
                     type="text"
                     placeholder="Adicionar Repositórios"
