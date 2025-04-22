@@ -1,11 +1,11 @@
 import styled, { keyframes, css } from 'styled-components';
-import { PrimaryColor } from '../../styles/colors'
+import { PrimaryColor } from '../../styles/colors';
 
 export const Title = styled.h1`
     color: red;
 `;
 
-export const Container = styled.div `
+export const Container = styled.div`
     max-width: 700px;
     background-color: #fff;
     border-radius: 4px;
@@ -18,12 +18,12 @@ export const Container = styled.div `
         display: flex;
         flex-direction: row;
         align-items: center;
-        
+
         svg {
             margin-right: 10px;
         }
     }
-`;  
+`;
 
 export const Form = styled.form`
     margin-top: 30px;
@@ -32,7 +32,8 @@ export const Form = styled.form`
 
     input {
         flex: 1;
-        border: 1px solid ${props => props.error ? '#ff0000' : '#eee'};
+        border: 1px solid
+            ${props => (props.error ? '#ff0000' : '#eee')};
         padding: 10px 15px;
         border-radius: 4px;
         font-size: 17px;
@@ -68,13 +69,14 @@ export const SubmitButton = styled.button.attrs(props => ({
         opacity: 0.5;
     }
 
-    ${props => props.loading &&
-    css`
-        svg {
-            animation: ${animateSpinner} 2s linear infinite;
-        }
-    `
-    }
+    ${props =>
+        props.loading &&
+        css`
+            svg {
+                animation: ${animateSpinner} 2s linear
+                    infinite;
+            }
+        `}
 `;
 
 export const List = styled.ul`
@@ -87,20 +89,20 @@ export const List = styled.ul`
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        
+
         // isso ignora o primeiro li que for criado, e só depois aplica esse estilo
         & + li {
             border-top: 1px solid #ddd;
         }
 
-        a{
+        a {
             color: ${PrimaryColor};
         }
     }
 `;
 
 export const DeleteButton = styled.button.attrs({
-    type: 'button'
+    type: 'button',
 })`
     margin-right: 12px;
     border: 0;

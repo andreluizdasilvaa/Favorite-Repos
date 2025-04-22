@@ -1,70 +1,190 @@
-# Getting Started with Create React App
+# Favorite Repos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicação React para gerenciar e acompanhar seus repositórios favoritos do GitHub.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Sumário
 
-### `npm start`
+- [Descrição Geral](#descrição-geral)
+- [Funcionalidades](#funcionalidades)
+- [Estrutura de Pastas](#estrutura-de-pastas)
+- [Principais Dependências](#principais-dependências)
+- [Configuração do Ambiente](#configuração-do-ambiente)
+- [Scripts Disponíveis](#scripts-disponíveis)
+- [Fluxo Principal da Aplicação](#fluxo-principal-da-aplicação)
+- [Detalhes das Páginas](#detalhes-das-páginas)
+- [Estilização](#estilização)
+- [Integração com a API do GitHub](#integração-com-a-api-do-github)
+- [Observações de Segurança](#observações-de-segurança)
+- [Referências](#referências)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Descrição Geral
 
-### `npm test`
+Este projeto é uma aplicação React criada para permitir ao usuário salvar, pesquisar e acompanhar seus repositórios favoritos do GitHub de forma simples e rápida. O usuário pode adicionar repositórios, visualizar detalhes e issues, filtrar por status e navegar por páginas de issues.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Funcionalidades
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Adicionar repositórios favoritos** via busca pelo nome completo (`owner/repo`).
+- **Listar repositórios salvos** com opção de remoção.
+- **Visualizar detalhes do repositório** e suas issues.
+- **Exibir quantidade de estrelas do repositório**.
+- **Paginação das issues** (5 por página).
+- **Filtragem das issues** por status: todas, abertas ou fechadas.
+- **Persistência local** dos repositórios favoritos via `localStorage`.
+- **Integração com a API do GitHub** (com suporte a token pessoal).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Estrutura de Pastas
 
-### `npm run eject`
+```
+favoriterepos/
+├── public/
+│   ├── index.html
+│   └── robots.txt
+├── src/
+│   ├── pages/
+│   │   ├── Main/
+│   │   │   ├── index.js
+│   │   │   └── styles.js
+│   │   └── Repositorio/
+│   │       ├── index.js
+│   │       └── styles.js
+│   ├── services/
+│   │   └── api.js
+│   ├── styles/
+│   │   ├── colors.js
+│   │   └── global.js
+│   ├── App.js
+│   ├── index.js
+│   └── routes.js
+├── .env
+├── .env.example
+├── .gitignore
+├── .prettierrc
+├── package.json
+└── README.md
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Principais Dependências
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- **React**: Biblioteca principal para construção da interface.
+- **react-router-dom**: Roteamento entre páginas.
+- **styled-components**: Estilização dos componentes.
+- **axios**: Requisições HTTP para a API do GitHub.
+- **react-icons**: Ícones SVG.
+- **prettier**: Padronização de código.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## Configuração do Ambiente
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. **Clonar o repositório** e instalar as dependências:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    ```sh
+    git clone https://github.com/andreluizdasilvaa/Favorite-Repos favoriterepos
+    cd favoriterepos
+    npm install
+    ```
 
-### Code Splitting
+2. **Configurar o token do GitHub**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+    - Crie um arquivo `.env` na raiz do projeto.
+    - Adicione sua chave pessoal:
+        ```
+        REACT_APP_GITHUB_TOKEN=seu_token_aqui
+        ```
+    - Um exemplo está disponível em `.env.example`.
 
-### Analyzing the Bundle Size
+3. **Iniciar o projeto**:
+    ```sh
+    npm start
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Scripts Disponíveis
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- `npm start`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Gera a versão de produção.
+- `npm run eject`: Eject do Create React App.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Fluxo Principal da Aplicação
 
-### Deployment
+### 1. Página Inicial (`/`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- **Adicionar repositório**: O usuário digita o nome completo do repositório e clica em adicionar.
+- **Listagem**: Exibe todos os repositórios salvos localmente.
+- **Remover**: O usuário pode remover um repositório da lista.
+- **Navegar para detalhes**: Ao clicar no ícone de barras, o usuário é redirecionado para a página de detalhes do repositório.
 
-### `npm run build` fails to minify
+### 2. Página de Detalhes do Repositório (`/repositorio/:repositorio`)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Exibe informações do repositório**: Nome, descrição e avatar da organização (se houver).
+- **Exibe a quantidade de estrelas do repositório**.
+- **Lista de issues**: Mostra as issues do repositório, 5 por página.
+- **Paginação**: Botões para avançar e voltar páginas.
+- **Filtro de status**: Botões para filtrar issues por "All", "Open" ou "Closed".
+
+---
+
+## Detalhes das Páginas
+
+### Main (`src/pages/Main/index.js`)
+
+- Gerencia o estado dos repositórios favoritos.
+- Usa `localStorage` para persistência.
+- Faz requisições à API do GitHub para validar e obter dados do repositório.
+- Permite remoção de repositórios.
+
+### Repositorio (`src/pages/Repositorio/index.js`)
+
+- Busca detalhes do repositório e suas issues.
+- Exibe a quantidade de estrelas do repositório.
+- Permite filtrar issues por status.
+- Implementa paginação das issues.
+- Exibe informações do usuário que abriu a issue, labels e estado.
+
+---
+
+## Estilização
+
+- Utiliza `styled-components` para criar componentes estilizados reutilizáveis.
+- Cores principais definidas em `src/styles/colors.js`.
+- Estilos globais em `src/styles/global.js`.
+
+---
+
+## Integração com a API do GitHub
+
+- As requisições são feitas via `src/services/api.js` usando `axios`.
+- O token do GitHub é lido do arquivo `.env` para evitar limites baixos de requisições.
+- Endpoints utilizados:
+    - `GET /repos/:owner/:repo`
+    - `GET /repos/:owner/:repo/issues`
+
+---
+
+## Observações de Segurança
+
+- **Nunca compartilhe seu token do GitHub publicamente**. O arquivo `.env` está no `.gitignore`, mas evite subir o token para repositórios públicos.
+- O token presente no arquivo `.env` deste projeto deve ser removido antes de qualquer publicação.
+
+---
+
+## Referências
+
+- [Documentação oficial do React](https://reactjs.org/)
+- [API do GitHub](https://docs.github.com/pt/rest)
+- [Create React App](https://create-react-app.dev/)
+
+---

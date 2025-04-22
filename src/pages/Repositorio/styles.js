@@ -1,6 +1,9 @@
-import styled from "styled-components";
-import { PrimaryColor, SecondaryColor } from "../../styles/colors";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import {
+    PrimaryColor,
+    SecondaryColor,
+} from '../../styles/colors';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
     max-width: 700px;
@@ -34,6 +37,18 @@ export const Owner = styled.header`
         text-align: center;
         line-height: 1.4;
         max-width: 400px;
+    }
+
+    .repoStars {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        background-color: ${PrimaryColor};
+        color: #fff;
+        padding: 3px 6px;
+        border-radius: 6px;
+        margin-top: 12px;
     }
 `;
 
@@ -102,7 +117,7 @@ export const IssuesList = styled.ul`
             div {
                 display: flex;
                 gap: 12px;
-                
+
                 margin-left: 0;
 
                 strong {
@@ -120,11 +135,8 @@ export const IssuesList = styled.ul`
                 padding: 2px 5px;
                 margin-left: 10px;
             }
-
         }
     }
-    
-
 `;
 
 export const PageActions = styled.div`
